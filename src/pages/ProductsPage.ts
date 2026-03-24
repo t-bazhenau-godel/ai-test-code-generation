@@ -93,5 +93,15 @@ export class ProductsPage extends BasePage {
       throw new Error(`Product not found: ${productName}`);
     }
   }
+
+  /**
+   * Logout from the application by opening menu and clicking logout
+   */
+  async logout(): Promise<void> {
+    logger.info('Logging out from application');
+    await this.headerComponent.openMenu();
+    await this.headerComponent.clickMenuItem('Logout');
+    await this.waitForPageLoad();
+  }
 }
 

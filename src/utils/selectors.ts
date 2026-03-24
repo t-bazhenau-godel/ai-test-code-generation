@@ -5,7 +5,7 @@
 export const SELECTORS = {
   // Header & Navigation
   HEADER_CONTAINER: '[data-test="header-container"]',
-  OPEN_MENU: '[data-test="open-menu"]',
+  OPEN_MENU: '#react-burger-menu-btn',
   CLOSE_MENU: '[data-test="close-menu"]',
   MENU_OVERLAY: '.bm-menu-wrap',
   SHOPPING_CART_LINK: '[data-test="shopping-cart-link"]',

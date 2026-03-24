@@ -2,6 +2,7 @@
 
 import { test, expect } from '@fixtures/PageFixtures';
 import { LoginPage } from '@pages/LoginPage';
+import { ProductsPage } from '@pages/ProductsPage';
 import logger from '@utils/logger';
 import { Users, TEST_PASSWORD } from '@utils/envHelper';
 
@@ -48,5 +49,28 @@ test.describe('Login', () => {
     const isErrorVisible = await loginPage.isErrorMessageVisible();
     expect(isErrorVisible).toBe(true);
     logger.info('Locked out user cannot login - error message displayed');
-  });  
+  });
+
+  test('should logout successfully after login', async ({ page }) => {
+    // Arrange
+    const username = Users.STANDARD_USER;
+    const productsPage = new ProductsPage(page);
+
+    // Act - Login process
+    await loginPage.inputUsername(username);
+    await loginPage.inputPassword(TEST_PASSWORD);
+    await loginPage.clickLoginButton();
+
+    // Assert - I'm on Product page
+    await expect(page).toHaveURL(/.*inventory/i);
+    logger.info('User logged in successfully - on products page');
+
+    // Act - Click 'Open menu' and 'Logout'
+    await productsPage.logout();
+    logger.info('User logged out');
+
+    // Assert - I'm on Login page
+    await expect(page).toHaveURL(/.*\//i);
+    logger.info('Logout successful - user redirected to login page');
+  });
 });
